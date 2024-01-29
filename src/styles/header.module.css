@@ -1,0 +1,25 @@
+.header{
+    width: 100%;
+    height: 10vh;
+    background-color: white;
+}
+.align{
+    display: flex;
+    color: gray;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    gap: 20px;
+    height: 100%;
+}
+.res{
+    text-decoration: none;
+    color: gray;
+    font-weight: bold;
+    font-size: x-large;
+    transition: text-shadow 0.3s ease, color 0.3s ease;
+}
+.res:hover{
+    color: black;
+    text-shadow: 1.5px 1.5px gray;
+}

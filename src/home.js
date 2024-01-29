@@ -1,9 +1,14 @@
 import React from "react";
+import style from "../src/styles/home.module.css"
 
 function Home(){
     return(
-        <div>
-            <h1 className="text-center mt-5">Welcome to our website!</h1>
+        <div className={`${style.main}`}>
+            <div className={`${style.display}`}>
+                <div className={`${style.events}`}>{/*current first 5 events */}
+
+                </div>
+            </div>
         </div>
     )
 }
