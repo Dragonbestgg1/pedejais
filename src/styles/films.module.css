@@ -29,14 +29,45 @@
 .display{
     display: flex;
     flex-direction: column;
-    width: 90%;
+    width: 96%;
     align-items: flex-start;
     justify-content: flex-start;
+    padding: 20px;
 }
 .container1{
     display: flex;
     flex-direction: row;
-    width: 50%;
+    width: 90%;
+    height: 50%;
     background-color: white;
     border: 1px solid rgb(209, 209, 209);
+}
+.img{
+    display: flex;
+    width: 90%;
+    height: 90%;
+    padding: 10px;
+    align-items: center;
+    justify-content: center;
+}
+.contain{
+    width: 20vw;
+}
+.content{
+    height: 100%;
+    width: 30vw;
+}
+.title{
+    width: 100%;
+    height: 10%;
+    padding: 10px;
+    font-weight: bold;
+    color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.h1{
+    font-weight: bold;
+    font-size: medium;
 }

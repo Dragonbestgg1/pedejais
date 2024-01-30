@@ -3,35 +3,45 @@
     height: 10vh;
     background-color: white;
 }
+.routes{
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+}
 .align{
     display: flex;
     color: gray;
     flex-direction: row;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: space-around;
     gap: 20px;
     height: 100%;
 }
 .res{
     text-decoration: none;
+    display: flex;
+    align-items: center;
     color: gray;
-    font-weight: bold;
-    font-size: x-large;
-    transition: text-shadow 0.3s ease, color 0.3s ease;
+    font-size: large;
+    padding: 15px;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 .res:hover,
 .log:hover{
     color: black;
-    text-shadow: 1.5px 1.5px gray;
+    background-color: lightgray;
 }
 .log{
     display: flex;
-    background: none;
-    font-size: 30px;
+    background: lightgray;
+    font-size: 20px;
+    height: 50%;
     border: none;
     cursor: pointer;
     align-items: center;
     justify-content: center;
-    color: gray;
+    gap: 10px;
+    color: black;
     transition: color 0.3s ease;
+    padding: 15px;
 }
