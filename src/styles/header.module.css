@@ -19,7 +19,19 @@
     font-size: x-large;
     transition: text-shadow 0.3s ease, color 0.3s ease;
 }
-.res:hover{
+.res:hover,
+.log:hover{
     color: black;
     text-shadow: 1.5px 1.5px gray;
+}
+.log{
+    display: flex;
+    background: none;
+    font-size: 30px;
+    border: none;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    color: gray;
+    transition: color 0.3s ease;
 }
