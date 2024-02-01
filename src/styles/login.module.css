@@ -31,6 +31,8 @@
     height: 70%;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
+    gap: 30px;
 }
 .input{
     padding: 10px;

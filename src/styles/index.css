@@ -13,6 +13,6 @@ code {
 }
 #root{
   height: 100vh;
-  background-color: black;
+  background-color: #efefef;
   overflow: hidden;
 }

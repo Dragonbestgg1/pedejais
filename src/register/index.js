@@ -1,21 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import style from "../styles/login.module.css";
+import style from "../styles/register.module.css";
 
-function Login({ closeModal }) {
-    const [username, setUsername] = React.useState("");
-    const [password, setPassword] = React.useState("");
-    const navigate = useNavigate();
+function Register() {
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [message, setMessage] = useState("");
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('/login', { username, password });
-            // handle successful login here
+            const response = await axios.post('/api/register', { username, password });
+            setMessage("User registered successfully");
         } catch (err) {
-            closeModal(); // Close the modal
-            navigate('/login', { state: { error: err.response.data.message } });
+            setMessage("Registration failed");
         }
     };
 
@@ -23,7 +21,7 @@ function Login({ closeModal }) {
         <div className={style.module}>
             <div className={style.main}>
                 <div className={style.title}>
-                    <h1 className={style.h1}>Login</h1>
+                    <h1 className={style.h1}>Register</h1>
                 </div>
                 <form onSubmit={handleSubmit} className={style.inputCon}>
                     <input 
@@ -40,11 +38,12 @@ function Login({ closeModal }) {
                         onChange={(e) => setPassword(e.target.value)} 
                         className={style.input}
                     />
-                    <button type="submit" className={style.submitButton}>Login</button>
+                    <button type="submit" className={style.submitButton}>Register</button>
                 </form>
+                {message && <p className={style.message}>{message}</p>}
             </div>
         </div>
     );
 }
 
-export default Login;
+export default Register;
