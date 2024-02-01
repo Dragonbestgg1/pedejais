@@ -1,0 +1,99 @@
+.main{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+.Page{
+    display: flex;
+    width: 100vh;
+    align-items: center;
+    justify-content: center;
+}
+.h1{
+    font-size: 18px;
+}
+.form{
+    flex-direction: column;
+    display: flex;
+    width: 95%;
+    height: 80%;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 40px;
+}
+.person,
+.birth{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 50%;
+    height: 6%;
+}
+.date,
+.month,
+.year{
+    width: 30%;
+    height: 100%;
+}
+.name,
+.surname{
+    width: 40%;
+    height: 80%;
+    padding: 10px;
+}
+.other{
+    width: 49%;
+    height: 5%;
+    padding: 10px;
+}
+.date,
+.month,
+.year,
+.name,
+.surname,
+.other{
+    border: none !important;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+.submitButton,
+.button{
+    background-color: #FFCF07;
+    border: none;
+    width: 50%;
+    height: 20%;
+    font-size: 30px;
+    font-weight: bold;
+}
+.submitButton{
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+.submitButton:disabled{
+    background-color: white;
+    color: gray;
+}
+.modal{
+    width: 40%;
+    height: 30%;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    right: auto;
+    bottom: auto;
+    transform: translate(-50%, -50%);
+}
+.button{
+    width: 10%;
+    height: 10%;
+    font-size: 18px;
+    cursor: pointer;
+}

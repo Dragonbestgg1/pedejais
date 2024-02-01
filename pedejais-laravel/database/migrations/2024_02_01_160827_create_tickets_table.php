@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user', function (Blueprint $table) {
+        Schema::create('tickets', function (Blueprint $table) {
             $table->id();
-            $table->string('email');
-            $table->string('username');
-            $table->string('password');
-            $table->rememberToken();
+            $table->unsignedBigInteger('film_id')->nullable()->default(null);
+            $table->unsignedBigInteger('activity_id')->nullable()->default(null);
+            $table->string('seat_number')->nullable();
+            $table->decimal('price', 8, 2);
+            $table->string('status');
             $table->timestamps();
         });
     }
@@ -26,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('tickets');
     }
 };

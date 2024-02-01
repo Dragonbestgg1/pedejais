@@ -19,6 +19,10 @@ function Login({ closeModal }) {
         }
     };
 
+    const handleRegister = () => {
+        navigate('/register');
+    };
+
     return (
         <div className={style.module}>
             <div className={style.main}>
@@ -42,9 +46,13 @@ function Login({ closeModal }) {
                     />
                     <button type="submit" className={style.submitButton}>Login</button>
                 </form>
+                <div className={`${style.reroute}`}>
+                    <h1 className={`${style.rerouteH1}`}>Not registered?</h1>
+                    <div onClick={handleRegister} className={`${style.rerouteButton}`}>Register</div>
+                </div>
             </div>
         </div>
     );
-}
+} 
 
 export default Login;

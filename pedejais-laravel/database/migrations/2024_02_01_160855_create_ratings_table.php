@@ -9,15 +9,13 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void {
-        Schema::create('films', function (Blueprint $table) {
+    public function up(): void
+    {
+        Schema::create('ratings', function (Blueprint $table) {
             $table->id();
-            $table->string('film_name');
-            $table->string('category');
-            $table->dateTime('airing');
-            $table->time('lenght');
-            $table->integer('ticket_id');
-            $table->integer('availabe_seats_id');
+            $table->unsignedBigInteger('film_id')->nullable()->default(null);
+            $table->unsignedBigInteger('activity_id')->nullable()->default(null);
+            $table->text('description');
             $table->timestamps();
         });
     }
@@ -27,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('films');
+        Schema::dropIfExists('ratings');
     }
 };

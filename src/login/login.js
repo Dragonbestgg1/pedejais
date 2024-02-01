@@ -1,7 +1,7 @@
 // LoginErrorPage.js
 import React from "react";
 import { useLocation } from "react-router-dom";
-import style from "../styles/login.module.css";
+import style from "../styles/loginErr.module.css";
 
 function LoginErrorPage() {
     const location = useLocation();

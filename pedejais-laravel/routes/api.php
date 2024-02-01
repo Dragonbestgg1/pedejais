@@ -15,6 +15,8 @@ Route::get('/films', [FilmController::class, "index"]);
 
 Route::get('/activities', [ActivitiesController::class, "index"]);
 
+Route::get('/login', [AuthController::class, 'login']);
+
 Route::post('/login', [AuthController::class, 'login']);
 
 Route::post('/register', [AuthController::class, 'register']);

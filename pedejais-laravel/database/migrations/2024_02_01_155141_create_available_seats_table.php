@@ -11,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('activities', function (Blueprint $table) {
+        Schema::create('available_seats', function (Blueprint $table) {
             $table->id();
-            $table->string('activity_name');
-            $table->dateTime('date');
-            $table->integer('ticket_id');
-            $table->integer('availabe_seats_id');
-            $table->timestamps();
+            $table->integer('max_seats');
+            $table->integer('available_seats');
+            $table->integer('taken_seats');
+            $table->string('stage');
         });
     }
 
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('available_seats');
     }
 };

@@ -22,7 +22,7 @@ function Header() {
             <div className={`${style.modalClose}`}>
                 <button className={`${style.modalBut}`} onClick={() => setModalIsOpen(false)}>X</button>
             </div>
-            <Login closeModal={() => setModalIsOpen(false)} /> {/* Pass closeModal prop here */}
+            <Login closeModal={() => setModalIsOpen(false)} />
         </Modal>
       </div>
     </div>

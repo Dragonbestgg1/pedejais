@@ -7,6 +7,7 @@ import Activities from './activities';
 import Profile from './user_profile';
 import Films from './films';
 import LoginErrorPage from './login/login';
+import Register from './register';
 import axios from 'axios';
 import { AuthProvider } from './AuthProvider'; // import the AuthProvider
 
@@ -24,7 +25,8 @@ function App() {
             <Route path="/activities" element={<Activities />}/>
             <Route path="user_profile" element={<Profile />}/>
             <Route path="films" element={<Films />}/>
-            <Route path="/login" element={<LoginErrorPage />}/> {/* Add this line */}
+            <Route path="/login" element={<LoginErrorPage />}/>
+            <Route path="/register" element={<Register />} />
           </Routes>
         </BrowserRouter>
       </div>
