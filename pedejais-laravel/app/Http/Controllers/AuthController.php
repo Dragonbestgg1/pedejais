@@ -14,10 +14,17 @@ class AuthController extends Controller
         $credentials = $request->only('name', 'password');
     
         if (Auth::attempt($credentials)) {
-            // Authentication passed...
-            return response()->json(['message' => 'Login successful']);
+            // Get the authenticated user
+            $user = Auth::user();
+    
+            // Return the user ID in the response
+            return response()->json([
+                'status' => 'success', 
+                'message' => 'Login successful', 
+                'userId' => $user->id  // Add this line
+            ]);
         } else {
-            return response()->json(['message' => 'Invalid email or password'], 401);
+            return response()->json(['status' => 'error', 'message' => 'Invalid name or password'], 401);
         }
     }
     
@@ -48,7 +55,11 @@ class AuthController extends Controller
         $user->save();
         $token = $user->createToken('authToken')->accessToken;
 
-        return response()->json(['message' => 'User registered successfully', 'token' => $token], 200);
+        return response()->json([
+            'message' => 'User registered successfully', 
+            'token' => $token, 
+            'userId' => $user->id  // Add this line
+        ], 200);
 
     }
     

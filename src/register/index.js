@@ -68,6 +68,12 @@ function Register() {
     const handleSubmit = (e) => {
         e.preventDefault();
         
+        if (form.password.length < 8) {
+            setErrorMessage('Password must be at least 8 characters long.');
+            setModalIsOpen(true);
+            return;
+        }
+    
         if (form.password !== form.confirmPassword) {
             setErrorMessage('Password and Confirm Password must be the same.');
             setModalIsOpen(true);
@@ -75,7 +81,7 @@ function Register() {
         }
         
         if (!isFormEmpty) {
-            axios.post('http://localhost:8000/api/register', form)
+            axios.post('/register', form)
                 .then(response => {
                     console.log(response.data);
                     navigate('/user_profile');
@@ -86,8 +92,7 @@ function Register() {
                     setModalIsOpen(true);
                 });
         }
-    };
-    
+    };    
 
     return (
         <div className={`${style.main}`}>
@@ -95,11 +100,11 @@ function Register() {
                 isOpen={modalIsOpen}
                 onRequestClose={() => setModalIsOpen(false)}
                 contentLabel="Error Message"
-                className="registerModal"
+                className={`${style.modal}`}
             >
                 <h2>Error</h2>
                 <p>{errorMessage}</p>
-                <button onClick={() => setModalIsOpen(false)}>Close</button>
+                <button className={`${style.button}`} onClick={() => setModalIsOpen(false)}>X</button>
             </Modal>
 
             <div className={`${style.Page}`}>

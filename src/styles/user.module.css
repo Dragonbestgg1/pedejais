@@ -1,3 +1,58 @@
 .main{
+    display: flex;
     height: 100vh;
+    width: 100vw;
+    align-items: center;
+    justify-content: center;
+}
+.box{
+    width: 60%;
+    height: 60%;
+    flex-direction: column;
+    background-color: white;
+    padding: 20px;
+}
+.title{
+    padding: 5px;
+}
+.name{
+    font-weight: normal;
+    font-size: xx-large;
+    cursor: default;
+}
+.info{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+.mainInfo{
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    height: 50%;
+    cursor: default;
+}
+.logout{
+    height: 16vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 15px;
+}
+.logoutBut{
+    background: none ;
+    border: none;
+    color: #FFCF07;
+    text-decoration: underline;
+    font-weight: bold;
+    font-size: medium;
+}
+.logoutBut:hover{
+    cursor: pointer;
+}
+.p{
+    font-size: 14px;
+    padding: 0px;
 }

@@ -1,27 +1,41 @@
-import React from "react";
+import React, { useContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import style from "../styles/login.module.css";
+import { AuthContext } from '../AuthProvider';
 
 function Login({ closeModal }) {
     const [username, setUsername] = React.useState("");
     const [password, setPassword] = React.useState("");
     const navigate = useNavigate();
+    const { login } = useContext(AuthContext);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('/login', { username, password });
-            // handle successful login here
+            const response = await axios.post('/login', { name: username, password });
+            if (response.data.message === 'Login successful') {
+                login(response.data.userId, username);
+                if (typeof closeModal === 'function') {
+                    closeModal();
+                }
+                navigate('/user_profile');
+            } else {
+                throw new Error(response.data.message);
+            }
         } catch (err) {
-            closeModal(); // Close the modal
+            closeModal();
             navigate('/login', { state: { error: err.response.data.message } });
         }
     };
 
     const handleRegister = () => {
+        if (typeof closeModal === 'function') {
+            closeModal();
+        }
         navigate('/register');
     };
+    
 
     return (
         <div className={style.module}>

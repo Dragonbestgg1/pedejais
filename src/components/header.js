@@ -1,12 +1,23 @@
-// Header.js
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { useNavigate } from 'react-router-dom';
 import style from "../styles/header.module.css";
 import Modal from "react-modal";
 import Login from "./login";
 import { BsPersonCircle } from "react-icons/bs";
+import { AuthContext } from '../AuthProvider';
 
 function Header() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const navigate = useNavigate();
+  const { isAuthenticated, name } = useContext(AuthContext);
+
+  const handleButtonClick = () => {
+    if (isAuthenticated) {
+      window.location.href = '/user_profile';
+    } else {
+      setModalIsOpen(true);
+    }
+  };
 
   return (
     <div className={`${style.header}`}>
@@ -15,9 +26,10 @@ function Header() {
           <a className={`${style.res}`} href="/">Home</a>
           <a className={`${style.res}`} href="/films">Films</a>
           <a className={`${style.res}`} href="/activities">Activities</a>
-          <a className={`${style.res}`} href="/user_profile">Profile</a>
         </div>
-        <button onClick={() => setModalIsOpen(true)} className={`${style.log}`}><BsPersonCircle /> Login</button>
+        <button onClick={handleButtonClick} className={`${style.log}`}>
+          <BsPersonCircle /> {name || 'Login'}
+        </button>
         <Modal className={`${style.modal}`} isOpen={modalIsOpen} onRequestClose={() => setModalIsOpen(false)}>
             <div className={`${style.modalClose}`}>
                 <button className={`${style.modalBut}`} onClick={() => setModalIsOpen(false)}>X</button>
