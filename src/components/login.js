@@ -14,8 +14,12 @@ function Login({ closeModal }) {
         e.preventDefault();
         try {
             const response = await axios.post('/login', { name: username, password });
+            console.log(response.data); // Log the server response
+    
             if (response.data.message === 'Login successful') {
                 login(response.data.userId, username);
+                // Store the user's privilege in local storage
+                localStorage.setItem('userPrivilage', response.data.privilage);
                 if (typeof closeModal === 'function') {
                     closeModal();
                 }
@@ -28,6 +32,7 @@ function Login({ closeModal }) {
             navigate('/login', { state: { error: err.response.data.message } });
         }
     };
+    
 
     const handleRegister = () => {
         if (typeof closeModal === 'function') {

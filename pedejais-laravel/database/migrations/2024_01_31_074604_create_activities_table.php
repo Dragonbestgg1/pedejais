@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('category');
             $table->dateTime('airing');
             $table->time('lenght');
-            $table->integer('ticket_id');
             $table->integer('availabe_seats_id');
             $table->timestamps();
         });

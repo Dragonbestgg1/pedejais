@@ -8,6 +8,8 @@ import Profile from './user_profile';
 import Films from './films';
 import LoginErrorPage from './login/login';
 import Register from './register';
+import Announcements from './announcements';
+import Control from './control';
 import axios from 'axios';
 import { AuthProvider } from './AuthProvider'; // import the AuthProvider
 
@@ -27,6 +29,8 @@ function App() {
             <Route path="films" element={<Films />}/>
             <Route path="/login" element={<LoginErrorPage />}/>
             <Route path="/register" element={<Register />} />
+            <Route path="/announcemencts" element={<Announcements />}/>
+            <Route path="control" element={<Control />}/>
           </Routes>
         </BrowserRouter>
       </div>

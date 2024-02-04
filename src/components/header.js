@@ -10,6 +10,7 @@ function Header() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const navigate = useNavigate();
   const { isAuthenticated, name } = useContext(AuthContext);
+  const privilege = localStorage.getItem('userPrivilage');
 
   const handleButtonClick = () => {
     if (isAuthenticated) {
@@ -22,11 +23,13 @@ function Header() {
   return (
     <div className={`${style.header}`}>
       <div className={`${style.align}`}>
-        <div className={`${style.routes}`}>
+      <div className={`${style.routes}`}>
           <a className={`${style.res}`} href="/">Home</a>
           <a className={`${style.res}`} href="/films">Films</a>
           <a className={`${style.res}`} href="/activities">Activities</a>
-        </div>
+          <a className={`${style.res}`} href="/announcements">Announcements</a>
+          {privilege === '1' && <a className={`${style.res}`} href="/control">Control</a>}
+      </div>
         <button onClick={handleButtonClick} className={`${style.log}`}>
           <BsPersonCircle /> {name || 'Login'}
         </button>

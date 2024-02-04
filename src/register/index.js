@@ -112,8 +112,8 @@ function Register() {
             </div>
             <form className={`${style.form}`} onSubmit={handleSubmit}>
                 <div className={`${style.person}`}>
-                    <input className={`${style.name}`} type="text" name="name" placeholder="Name:" onChange={handleInputChange} />
-                    <input className={`${style.surname}`} type="text" name="surname" placeholder="Surname:" onChange={handleInputChange} />
+                    <input className={`${style.name}`} type="text" name="name" placeholder="Name: (required)" onChange={handleInputChange} />
+                    <input className={`${style.surname}`} type="text" name="surname" placeholder="Surname: (required)" onChange={handleInputChange} />
                 </div>
                 <div className={`${style.birth}`}>
                     <Select
@@ -121,7 +121,7 @@ function Register() {
                         name="birthDate"
                         options={days}
                         onChange={handleSelectChange}
-                        placeholder="BirthDay"
+                        placeholder="BirthDay (required)"
                         components={{ DropdownIndicator }}
                     />
                     <Select
@@ -129,7 +129,7 @@ function Register() {
                         name="birthMonth"
                         options={months}
                         onChange={handleSelectChange}
-                        placeholder="Birth Month"
+                        placeholder="Birth Month (required)"
                         components={{ DropdownIndicator }}
                     />
                     <Select
@@ -137,15 +137,15 @@ function Register() {
                         name="birthYear"
                         options={years}
                         onChange={handleSelectChange}
-                        placeholder="Birth Year"
+                        placeholder="Birth Year (required)"
                         components={{ DropdownIndicator }}
                     />
                 </div>
-                <input className={`${style.other}`} type="email" name="email" placeholder="Email:" onChange={handleInputChange} />
+                <input className={`${style.other}`} type="email" name="email" placeholder="Email: (required)" onChange={handleInputChange} />
                 <input className={`${style.other}`} type="tel" name="phoneNumber" placeholder="Phone Number:" onChange={handleInputChange} />
                 <input className={`${style.other}`} type="text" name="city" placeholder="City:" onChange={handleInputChange} />
-                <input className={`${style.other}`} type="password" name="password" placeholder="Password:" onChange={handleInputChange} />
-                <input className={`${style.other}`} type="password" name="confirmPassword" placeholder="Confirm Password:" onChange={handleInputChange} />
+                <input className={`${style.other}`} type="password" name="password" placeholder="Password: (required)" onChange={handleInputChange} />
+                <input className={`${style.other}`} type="password" name="confirmPassword" placeholder="Confirm Password: (required)" onChange={handleInputChange} />
                 <button type="submit" disabled={isFormEmpty} className={`${style.submitButton}`}>Register</button>
             </form>
         </div>

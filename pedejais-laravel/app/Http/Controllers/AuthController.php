@@ -17,11 +17,12 @@ class AuthController extends Controller
             // Get the authenticated user
             $user = Auth::user();
     
-            // Return the user ID in the response
+            // Return the user ID and privilege in the response
             return response()->json([
                 'status' => 'success', 
                 'message' => 'Login successful', 
-                'userId' => $user->id  // Add this line
+                'userId' => $user->id,
+                'privilage' => $user->privilage 
             ]);
         } else {
             return response()->json(['status' => 'error', 'message' => 'Invalid name or password'], 401);
@@ -38,8 +39,8 @@ class AuthController extends Controller
             'birthDate' => 'required|integer',
             'birthMonth' => 'required|integer',
             'birthYear' => 'required|integer',
-            'city' => 'nullable', // city is optional
-            'phoneNumber' => 'nullable' // phoneNumber is optional
+            'city' => 'nullable', 
+            'phoneNumber' => 'nullable'
         ]);
     
         $user = new User;
@@ -58,9 +59,8 @@ class AuthController extends Controller
         return response()->json([
             'message' => 'User registered successfully', 
             'token' => $token, 
-            'userId' => $user->id  // Add this line
+            'userId' => $user->id,
+            'privilege' => $user->privilege  // Add this line
         ], 200);
-
     }
-    
 }

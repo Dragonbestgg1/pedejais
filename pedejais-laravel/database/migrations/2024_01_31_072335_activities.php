@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('activity_name');
             $table->dateTime('date');
-            $table->integer('ticket_id');
             $table->integer('availabe_seats_id');
             $table->timestamps();
         });
