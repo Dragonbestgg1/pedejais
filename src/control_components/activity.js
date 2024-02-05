@@ -8,18 +8,17 @@ import "react-datepicker/dist/react-datepicker.css";
 function Control_activity() {
     const [activity, setActivity] = useState({
         activity_name: '',
-        date: new Date(),
+        dates: [new Date()], // Changed 'date' to 'dates' and made it an array
         availabe_seats_id: ''
     });
 
-    const [seats, setSeats] = useState([]);
+    const [stages, setStages] = useState([]);
     const [modalIsOpen, setModalIsOpen] = useState(false);
 
     useEffect(() => {
-        // Fetch available seats from the database
-        axios.get('/seats')
+        axios.get('/stage')
             .then(response => {
-                setSeats(response.data.map(seat => ({ value: seat.id, label: seat.name })));
+                setStages(response.data.map(stage => ({ value: stage.id, label: stage.stage })));
             })
             .catch(error => {
                 console.error(error);
@@ -40,10 +39,19 @@ function Control_activity() {
         });
     };
 
-    const handleDateChange = date => {
+    const handleDateChange = (date, index) => { // Added 'index' parameter
+        let newDates = [...activity.dates]; // Copy the current dates
+        newDates[index] = date; // Update the specific date
         setActivity({
             ...activity,
-            date: date
+            dates: newDates // Update the state with the new dates
+        });
+    };
+
+    const addDate = () => {
+        setActivity({
+            ...activity,
+            dates: [...activity.dates, new Date()] // Add a new date to the array
         });
     };
 
@@ -62,12 +70,15 @@ function Control_activity() {
 
     return (
         <div>
-            <button onClick={() => setModalIsOpen(true)}>Open Form</button>
+            <button onClick={() => setModalIsOpen(true)}>New Activity</button>
             <Modal isOpen={modalIsOpen} onRequestClose={() => setModalIsOpen(false)}>
                 <form onSubmit={handleSubmit}>
                     <input type="text" name="activity_name" onChange={handleChange} placeholder="Activity Name" />
-                    <DatePicker selected={activity.date} onChange={handleDateChange} />
-                    <Select name="availabe_seats_id" options={seats} onChange={handleSelectChange} placeholder="Available Seats ID" />
+                    {activity.dates.map((date, index) => ( // Map over the dates
+                        <DatePicker key={index} selected={date} onChange={date => handleDateChange(date, index)} /> // Pass the index to handleDateChange
+                    ))}
+                    <button type="button" onClick={addDate}>Add another date</button>
+                    <Select name="availabe_seats_id" options={stages} onChange={handleSelectChange} placeholder="Stage" />
                     <button type="submit">Submit</button>
                 </form>
             </Modal>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from 'react-router-dom';
 import style from "../styles/header.module.css";
 import Modal from "react-modal";
@@ -9,8 +9,9 @@ import { AuthContext } from '../AuthProvider';
 function Header() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const navigate = useNavigate();
-  const { isAuthenticated, name } = useContext(AuthContext);
-  const privilege = localStorage.getItem('userPrivilage');
+  const { isAuthenticated, user } = useContext(AuthContext);
+  const { userId, name } = user || {};
+  const privilage = localStorage.getItem('privilage');
 
   const handleButtonClick = () => {
     if (isAuthenticated) {
@@ -28,7 +29,7 @@ function Header() {
           <a className={`${style.res}`} href="/films">Films</a>
           <a className={`${style.res}`} href="/activities">Activities</a>
           <a className={`${style.res}`} href="/announcements">Announcements</a>
-          {privilege === '1' && <a className={`${style.res}`} href="/control">Control</a>}
+          {privilage === '1' && <a className={`${style.res}`} href="/control">Control</a>}
       </div>
         <button onClick={handleButtonClick} className={`${style.log}`}>
           <BsPersonCircle /> {name || 'Login'}

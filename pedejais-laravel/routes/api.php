@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ActivitiesController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AvailableSeatController;
 use App\Http\Controllers\FilmController;
 use App\Http\Controllers\UserControl;
 use App\Http\Controllers\UserController;
@@ -25,6 +26,12 @@ Route::post('/login', [AuthController::class, 'login']);
 
 Route::get('/users/{id}', [UserController::class, 'show']);
 
+Route::put('/users/{id}', [UserController::class, 'update']);
+
 Route::get('/user', [UserControl::class, 'index']);
 
 Route::post('/register', [AuthController::class, 'register']);
+
+Route::post('/stage', [AvailableSeatController::class, 'add']);
+
+Route::get('/stage', [AvailableSeatController::class, 'getAll']);

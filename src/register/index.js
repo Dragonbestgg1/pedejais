@@ -1,12 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import Select, { components } from 'react-select';
 import { ChevronDown } from 'react-feather'; 
 import style from '../styles/register.module.css';
 import Modal from 'react-modal';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../AuthProvider';
 import axios from 'axios';
-
-
 
 const DropdownIndicator = (props) => {
     return (
@@ -30,6 +29,7 @@ function Register() {
         phoneNumber: ''
     });
 
+    const { login } = useContext(AuthContext);
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
 
@@ -82,18 +82,20 @@ function Register() {
         
         if (!isFormEmpty) {
             axios.post('/register', form)
-                .then(response => {
-                    console.log(response.data);
-                    navigate('/user_profile');
-                })
-                .catch(error => {
-                    console.error(error);
-                    setErrorMessage('An error occurred while registering.');
-                    setModalIsOpen(true);
-                });
+            .then(response => {
+                const { token, userId, privilage, name } = response.data;
+                console.log('User registered successfully');
+                localStorage.setItem('token', token);
+                login(userId, name, privilage);
+                navigate('/user_profile');
+            })
+            .catch(error => {
+                console.error(error);
+                setErrorMessage('An error occurred while registering.');
+                setModalIsOpen(true);
+            });
         }
-    };    
-
+    };
     return (
         <div className={`${style.main}`}>
             <Modal

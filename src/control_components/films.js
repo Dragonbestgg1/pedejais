@@ -9,12 +9,12 @@ function Control_film() {
     const [film, setFilm] = useState({
         film_name: '',
         category: '',
-        airing: [new Date()],
+        airing: [new Date()], // 'airing' is already an array
         length: '',
         availabe_seats_id: ''
     });
 
-    const [seats, setSeats] = useState([]);
+    const [stages, setStages] = useState([]);
     const [modalIsOpen, setModalIsOpen] = useState(false);
 
     const genres = [
@@ -31,9 +31,9 @@ function Control_film() {
     ];
 
     useEffect(() => {
-        axios.get('/seats')
+        axios.get('/stage')
             .then(response => {
-                setSeats(response.data.map(seat => ({ value: seat.id, label: seat.name })));
+                setStages(response.data.map(stage => ({ value: stage.id, label: stage.stage })));
             })
             .catch(error => {
                 console.error(error);
@@ -85,7 +85,7 @@ function Control_film() {
 
     return (
         <div>
-            <button onClick={() => setModalIsOpen(true)}>Open Form</button>
+            <button onClick={() => setModalIsOpen(true)}>New Film</button>
             <Modal isOpen={modalIsOpen} onRequestClose={() => setModalIsOpen(false)}>
                 <form onSubmit={handleSubmit}>
                     <input type="text" name="film_name" onChange={handleChange} placeholder="Film Name" />
@@ -95,7 +95,7 @@ function Control_film() {
                     ))}
                     <button type="button" onClick={addDate}>Add another date</button>
                     <input type="number" name="length" onChange={handleChange} placeholder="Length" />
-                    <Select name="availabe_seats_id" options={seats} onChange={handleSelectChange} placeholder="Stage" />
+                    <Select name="availabe_seats_id" options={stages} onChange={handleSelectChange} placeholder="Stage" />
                     <button type="submit">Submit</button>
                 </form>
             </Modal>

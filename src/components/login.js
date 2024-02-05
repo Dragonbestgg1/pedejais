@@ -16,10 +16,8 @@ function Login({ closeModal }) {
             const response = await axios.post('/login', { name: username, password });
             console.log(response.data); // Log the server response
     
-            if (response.data.message === 'Login successful') {
-                login(response.data.userId, username);
-                // Store the user's privilege in local storage
-                localStorage.setItem('userPrivilage', response.data.privilage);
+            if (response.data.status === 'success') {
+                login(response.data.userId, username, response.data.privilage);
                 if (typeof closeModal === 'function') {
                     closeModal();
                 }

@@ -11,7 +11,9 @@ function Control_stage() {
         stage: ''
     });
 
-    const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [inputModalIsOpen, setInputModalIsOpen] = useState(false);
+    const [messageModalIsOpen, setMessageModalIsOpen] = useState(false);
+    const [modalMessage, setModalMessage] = useState('');
 
     const handleChange = e => {
         setSeat({
@@ -23,25 +25,38 @@ function Control_stage() {
     const handleSubmit = e => {
         e.preventDefault();
 
-        axios.post('/seats', seat)
+        if (!seat.max_seats || !seat.stage) {
+            setModalMessage('Input fields are not filled');
+            setMessageModalIsOpen(true);
+            return;
+        }
+
+        axios.post('/stage', seat)
             .then(response => {
                 console.log(response.data);
-                setModalIsOpen(false);
+                setModalMessage('Stage added successfully!');
+                setMessageModalIsOpen(true);
+                setInputModalIsOpen(false); // Close the input modal
             })
             .catch(error => {
                 console.error(error);
+                setModalMessage('There was an error');
+                setMessageModalIsOpen(true);
             });
     };
 
     return (
         <div>
-            <button onClick={() => setModalIsOpen(true)}>Open Form</button>
-            <Modal isOpen={modalIsOpen} onRequestClose={() => setModalIsOpen(false)}>
+            <button onClick={() => setInputModalIsOpen(true)}>New Stage</button>
+            <Modal isOpen={inputModalIsOpen} onRequestClose={() => setInputModalIsOpen(false)}>
                 <form onSubmit={handleSubmit}>
                     <input type="number" name="max_seats" onChange={handleChange} placeholder="Max Seats" />
                     <input type="text" name="stage" onChange={handleChange} placeholder="Stage" />
                     <button type="submit">Submit</button>
                 </form>
+            </Modal>
+            <Modal isOpen={messageModalIsOpen} onRequestClose={() => setMessageModalIsOpen(false)}>
+                <p>{modalMessage}</p>
             </Modal>
         </div>
     );

@@ -60,7 +60,8 @@ class AuthController extends Controller
             'message' => 'User registered successfully', 
             'token' => $token, 
             'userId' => $user->id,
-            'privilege' => $user->privilege  // Add this line
-        ], 200);
+            'privilege' => $user->privilege,
+            'name' => $user->name  // Add this line
+        ], 200);        
     }
 }

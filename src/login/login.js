@@ -25,9 +25,9 @@ function LoginErrorPage() {
             const response = await axios.post('/login', { name, password });
             console.log(response.data);
     
-            if (response.data.message === 'Login successful') {
-                login(response.data.userId, name);
-                localStorage.setItem('userPrivilege', response.data.privilage);
+            if (response.data.status === 'success') {
+                const { userId, privilage } = response.data;
+                login(userId, name, privilage);
                 navigate('/user_profile');
             } else {
                 throw new Error(response.data.message);
@@ -35,7 +35,8 @@ function LoginErrorPage() {
         } catch (err) {
             setModalIsOpen(true);
         }
-    };    
+    };
+     
     
     return (
         <div className={style.module}>
