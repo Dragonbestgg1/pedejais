@@ -4,14 +4,17 @@ import Select from 'react-select';
 import DatePicker from 'react-datepicker';
 import Modal from 'react-modal';
 import "react-datepicker/dist/react-datepicker.css";
+import style from '../styles/component.module.css';
 
 function Control_film() {
     const [film, setFilm] = useState({
         film_name: '',
         category: '',
         airing: [new Date()],
-        lenght: '00:00:00', // Changed 'length' to 'lenght'
-        availabe_seats_id: ''
+        lenght: '00:00:00',
+        availabe_seats_id: '',
+        price: '',
+        imageURL: ''
     });
 
     const [stages, setStages] = useState([]);
@@ -56,7 +59,7 @@ function Control_film() {
 
     const handleDateChange = (date, index) => {
         let newAiring = [...film.airing];
-        newAiring[index] = date.toISOString().split('T')[0]; // This will give you a date string in the format 'YYYY-MM-DD'
+        newAiring[index] = date.toISOString().split('T')[0];
         setFilm({
             ...film,
             airing: newAiring
@@ -95,7 +98,7 @@ function Control_film() {
                 }
                 return date.toISOString().split('T')[0]; // Convert each date in the airing array to 'YYYY-MM-DD' format
             }),
-            lenght: lenghtInSeconds // Send the length in seconds as a number
+            lenght: lenghtInSeconds 
         };
     
         // Log the filmData object
@@ -110,8 +113,6 @@ function Control_film() {
                 console.error(error.response);
             });
     };
-    
-    
 
     return (
         <div>
@@ -125,6 +126,8 @@ function Control_film() {
                     ))}
                     <button type="button" onClick={addDate}>Add another date</button>
                     <input type="time" name="lenght" onChange={handleChange} placeholder="Length" /> 
+                    <input type="number" step="0.01" name="price" onChange={handleChange} placeholder="Price" />
+                    <input type="text" name="imageURL" onChange={handleChange} placeholder="Image URL" />
                     <Select name="availabe_seats_id" options={stages} onChange={handleSelectChange} placeholder="Stage" />
                     <button type="submit">Submit</button>
                 </form>
@@ -132,5 +135,4 @@ function Control_film() {
         </div>
     );
 }
-
 export default Control_film;

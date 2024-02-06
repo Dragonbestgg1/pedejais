@@ -27,7 +27,7 @@ function Header() {
       <div className={`${style.routes}`}>
           <a className={`${style.res}`} href="/">Home</a>
           <a className={`${style.res}`} href="/films">Films</a>
-          <a className={`${style.res}`} href="/activities">Activities</a>
+          {/* <a className={`${style.res}`} href="/activities">Activities</a> */}
           <a className={`${style.res}`} href="/announcements">Announcements</a>
           {privilage === '1' && <a className={`${style.res}`} href="/control">Control</a>}
       </div>

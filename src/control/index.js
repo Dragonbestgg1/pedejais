@@ -1,14 +1,15 @@
 import React from 'react';
 import Control_film from '../control_components/films';
 import Control_stage from '../control_components/stage';
-import Control_activity from '../control_components/activity';
+import style from '../styles/control.module.css';
 
 function Control() {
     return (
-        <div>
-            <Control_film />
-            <Control_stage />
-            <Control_activity />
+        <div className={`${style.main}`}>
+            <div className={`${style.content}`}>
+                <Control_film />
+                <Control_stage />
+            </div>
         </div>
     );
 }

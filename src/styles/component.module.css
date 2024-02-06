@@ -1,0 +1,42 @@
+.modal{
+    width: 50vw;
+    height: 60vh;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    right: auto;
+    bottom: auto;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    gap: 20px;
+    padding: 20px;
+}
+.form{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+}
+.input{
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid black;
+}
+.But{
+    background-color: #FFCF07;
+    width: 100%;
+    height: 5vh;
+    border: none;
+    transition: background-color 0.3s ease;
+    border-radius: 5px;
+}
+.But:hover{
+    cursor: pointer;
+    background-color: #FFA80F;
+}

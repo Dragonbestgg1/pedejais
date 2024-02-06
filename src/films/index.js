@@ -1,15 +1,22 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import style from "../styles/films.module.css";
+import Select from "react-select";
+import { useNavigate } from "react-router-dom";
 
 function Films() {
     const [films, setFilms] = useState([]);
-    const [searchDate, setSearchDate] = useState("");
+    const [searchDate, setSearchDate] = useState(new Date().toISOString().split('T')[0]);
     const [searchGenre, setSearchGenre] = useState("");
-    const [sortBy, setSortBy] = useState("");
-
+    const [searchFilm, setSearchFilm] = useState("");
+    const navigate = useNavigate();
     const genres = ["Action", "Adventure", "Comedy", "Drama", "Fantasy", "Horror", "Mystery", "Romance", "Thriller", "Western"]; // replace this with your list of genres
 
+    const handleBuyTicketClick = (film, date) => {
+        const filmWithSelectedDate = { ...film, airing: date };
+        navigate('/ticket', { state: { film: filmWithSelectedDate } });
+    };
+    
     // Generate an array of dates for the next 2 weeks
     const dates = Array.from({length: 28}, (_, i) => {
         const date = new Date();
@@ -21,112 +28,98 @@ function Films() {
         axios.get('/films')
             .then(response => {
                 setFilms(response.data);
+                console.log(response.data);
             })
             .catch(error => {
                 console.error('There was an error!', error);
             });
     }, []);
-    console.log(films);
 
     let filteredFilms = films.filter(film => {
-        // If film.airing is an array, iterate over it
-        if (Array.isArray(film.airing)) {
-            return film.airing.some(dateStr => {
-                // Remove square brackets and double quotes from dateStr
-                dateStr = dateStr.replace(/[\[\]"]/g, '');
-                dateStr = dateStr.replace(/"/g, '');
-                if (isNaN(Date.parse(dateStr))) {
-                    console.error('Invalid date:', dateStr);
-                    return false;
-                }
-                let filmDate = new Date(dateStr).toISOString().split('T')[0]; // Convert to ISO string and split to get the date part
-                return filmDate.includes(searchDate);
-            }) && (searchGenre === "" || film.category === searchGenre);
-        } else {
-            console.error('Invalid date:', film.airing);
-            return false;
-        }
-    });
-    
+        if (searchDate !== "" && !film.airing.some(date => date === searchDate)) return false;
+        if (searchGenre !== "" && film.category.toLowerCase() !== searchGenre.toLowerCase()) return false;
+        if (searchFilm !== "" && !film.film_name.toLowerCase().includes(searchFilm)) return false;
+        return true;
+    });    
+      
+    const dateOptions = dates.map((date, index) => ({
+        value: date,
+        label: index === 0 ? `Today ${new Date(date).toLocaleDateString(undefined, { month: 'numeric', day: 'numeric', year: 'numeric' })}` : 
+        index === 1 ? `Tomorrow ${new Date(date).toLocaleDateString(undefined, {  month: 'numeric', day: 'numeric', year: 'numeric' })}` :
+        new Date(date).toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' })
+    }));
 
-    if (sortBy === "name") {
-        filteredFilms.sort((a, b) => a.film_name.localeCompare(b.film_name));
-    } else if (sortBy === "date") {
-        filteredFilms.sort((a, b) => new Date(b.airing) - new Date(a.airing));
-    }
-
-    const handleDateChange = (e) => {
-        setSearchDate(e.target.value);
-        setSearchGenre("");
+    const genreOptions = genres.map((genre, index) => ({
+        value: genre,
+        label: genre
+    }));
+    const handleDateChange = (selectedDate) =>{
+        setSearchDate(selectedDate);
+        setSearchGenre("")
     };
     
-    const handleGenreChange = (e) => {
-        setSearchGenre(e.target.value);
+    const handleGenreChange = (selectedOption) => {
+        setSearchGenre(selectedOption ? selectedOption.value.toLowerCase() : "");
     };
-    
-    const handleSortChange = (e) => {
-        setSortBy(e.target.value);
-        setSearchDate("");
-        setSearchGenre("");
+
+    const handleFilmChange = (e) => {
+        setSearchFilm(e.target.value.toLowerCase());
     };
     return (
         <div className={`${style.main}`}>
             <div className={`${style.options}`}>{/*options */}
                 <div>{/*date search */}
-                <select value={searchDate} onChange={handleDateChange}>
-                    {dates.map((date, index) => (
-                        <option key={index} value={date}>
-                            {index === 0 ? `Today ${new Date(date).toLocaleDateString(undefined, { month: 'numeric', day: 'numeric', year: 'numeric' })}` : 
-                            index === 1 ? `Tomorrow ${new Date(date).toLocaleDateString(undefined, {  month: 'numeric', day: 'numeric', year: 'numeric' })}` :
-                            new Date(date).toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' })}
-                        </option>
-                    ))}
-                </select>
+                    <Select
+                        value={dateOptions.find(option => option.value === searchDate)}
+                        onChange={option => handleDateChange(option.value)}
+                        options={dateOptions}
+                    />
                 </div>
                 <div>{/* genre search*/}
-                    <select value={searchGenre} onChange={handleGenreChange}>
-                        <option value="">All Genres</option>
-                        {genres.map((genre, index) => (
-                            <option key={index} value={genre}>{genre}</option>
-                        ))}
-                    </select>
+                <Select
+                    value={genreOptions.find(option => option.value === searchGenre)}
+                    onChange={option => handleGenreChange(option)}
+                    options={genreOptions}
+                />
                 </div>
                 <div>{/*  sort by  */}
-                    <select value={sortBy} onChange={handleSortChange}>
-                        <option value="">Sort by</option>
-                        <option value="name">Name</option>
-                        <option value="date">Date</option>
-                    </select>
+                    <div className={`${style.options}`}>
+                        <input className={`${style.input}`} type="text" placeholder="Search film" onChange={handleFilmChange} />
+                    </div>
                 </div>
             </div>
             <div className={`${style.display}`}>{/*display */}
-                {filteredFilms.map((film, index) => (
-                    <div key={index}>{/*film display */}
-                        <div className={`${style.container1}`}>{/*container */}
-                            <div className={`${style.contain}`}>{/*img */}
-                                <img className={`${style.img}`} src={film.imageURL}></img>
-                            </div>
-                            <div className={`${style.adjust}`}>
-                                <div className={`${style.content}`}>{/*rest */}
-                                    <div className={`${style.title}`}>{/*title */}
-                                        <h1 className={`${style.h1}`}>{film.film_name}</h1>
-                                    </div>
-                                    <div className={`${style.date}`}>{/*airing info */}
-                                    <h1 className={`${style.dateH}`}>{new Date(film.airing).toLocaleTimeString()}</h1>
-                                    </div>
-                                    <div className={`${style.cat}`}>{/*rest */}
-                                        <p>{film.category}</p>
-                                    </div>
+            {filteredFilms.length > 0 && filteredFilms.flatMap((film, index) => 
+                film.airing.filter(date => date === searchDate).map((date, dateIndex) => (
+                        <div key={`${film.id}-${dateIndex}`}>{/*film display */}
+                            <div className={`${style.container1}`}>{/*container */}
+                                <div className={`${style.contain}`}>{/*img */}
+                                    <img className={`${style.img}`} src={film.imageURL}></img>
                                 </div>
-                                <div className={`${style.button}`}>
-                                    <button className={`${style.but}`}>
-                                        Buy ticket
-                                    </button>
+                                <div className={`${style.adjust}`}>
+                                    <div className={`${style.content}`}>{/*rest */}
+                                        <div className={`${style.title}`}>{/*title */}
+                                            <h1 className={`${style.h1}`}>{film.film_name}</h1>
+                                        </div>
+                                        <div className={`${style.strong}`}>
+                                            <div className={`${style.cat}`}>
+                                                <p>{film.category}</p>
+                                            </div>
+                                            <div className={`${style.price}`}>{/*price */}
+                                                <p>{`Price: ${film.price}`}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className={`${style.button}`}>
+                                        <button className={`${style.but}`} onClick={() => handleBuyTicketClick(film, date)}>
+                                            Buy ticket
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                ))}
+                    ))
+                )}
             </div>
         </div>
     )

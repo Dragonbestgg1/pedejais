@@ -4,6 +4,7 @@ import Modal from 'react-modal';
 import Select from 'react-select';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
+import style from '../styles/component.module.css';
 
 function Control_activity() {
     const [activity, setActivity] = useState({

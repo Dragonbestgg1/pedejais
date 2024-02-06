@@ -10,6 +10,7 @@ import LoginErrorPage from './login/login';
 import Register from './register';
 import Announcements from './announcements';
 import Control from './control';
+import BuyTicket from './ticket';
 import axios from 'axios';
 import { AuthProvider } from './AuthProvider'; // import the AuthProvider
 
@@ -31,6 +32,7 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/announcemencts" element={<Announcements />}/>
             <Route path="control" element={<Control />}/>
+            <Route path="/ticket" element={<BuyTicket />} />
           </Routes>
         </BrowserRouter>
       </div>

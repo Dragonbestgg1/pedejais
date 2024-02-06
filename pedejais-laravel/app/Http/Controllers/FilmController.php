@@ -10,10 +10,11 @@ class FilmController extends Controller
     public function index()
     {
         $films = Film::all();
-
+    
         foreach($films as $id => $film) {
             $films[$id]->airing = json_decode($film->airing);
         }
+    
         return response()->json($films);
     }
 
@@ -25,6 +26,8 @@ class FilmController extends Controller
             'airing' => 'required|array',
             'lenght' => 'required|numeric', 
             'availabe_seats_id' => 'required|integer',
+            'price' => 'required|regex:/^\d+(\.\d{1,2})?$/',
+            'imageURL' => 'required|url'
         ]);
 
         // Convert the airing dates array to a JSON string

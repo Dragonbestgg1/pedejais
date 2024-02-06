@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import Modal from 'react-modal';
+import style from '../styles/component.module.css';
 
 function Control_stage() {
     const [seat, setSeat] = useState({
@@ -47,12 +48,12 @@ function Control_stage() {
 
     return (
         <div>
-            <button onClick={() => setInputModalIsOpen(true)}>New Stage</button>
-            <Modal isOpen={inputModalIsOpen} onRequestClose={() => setInputModalIsOpen(false)}>
-                <form onSubmit={handleSubmit}>
-                    <input type="number" name="max_seats" onChange={handleChange} placeholder="Max Seats" />
-                    <input type="text" name="stage" onChange={handleChange} placeholder="Stage" />
-                    <button type="submit">Submit</button>
+            <button className={`${style.but}`} onClick={() => setInputModalIsOpen(true)}>New Stage</button>
+            <Modal className={`${style.modal}`} isOpen={inputModalIsOpen} onRequestClose={() => setInputModalIsOpen(false)}>
+                <form className={`${style.form}`} onSubmit={handleSubmit}>
+                    <input className={`${style.input}`} type="number" name="max_seats" onChange={handleChange} placeholder="Max Seats" />
+                    <input className={`${style.input}`} type="text" name="stage" onChange={handleChange} placeholder="Stage" />
+                    <button className={`${style.But}`} type="submit">Submit</button>
                 </form>
             </Modal>
             <Modal isOpen={messageModalIsOpen} onRequestClose={() => setMessageModalIsOpen(false)}>
