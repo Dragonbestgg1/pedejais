@@ -10,6 +10,10 @@ class FilmController extends Controller
     public function index()
     {
         $films = Film::all();
+
+        foreach($films as $id => $film) {
+            $films[$id]->airing = json_decode($film->airing);
+        }
         return response()->json($films);
     }
 
@@ -19,20 +23,27 @@ class FilmController extends Controller
             'film_name' => 'required|max:255',
             'category' => 'required|max:255',
             'airing' => 'required|array',
-            'length' => 'required|integer',
+            'lenght' => 'required|numeric', 
             'availabe_seats_id' => 'required|integer',
         ]);
-    
-        $film = Film::create($validatedData);
-    
-        foreach ($validatedData['airing'] as $date) {
-            AiringDate::create([
-                'film_id' => $film->id,
-                'date' => $date,
-            ]);
+
+        // Convert the airing dates array to a JSON string
+        $validatedData['airing'] = json_encode($validatedData['airing']);
+
+        // Convert the length from time string to seconds and then to a string
+        if (is_numeric($validatedData['lenght'])) {
+            $hours = floor($validatedData['lenght'] / 3600);
+            $minutes = floor(($validatedData['lenght'] % 3600) / 60);
+            $seconds = $validatedData['lenght'] % 60;
+        } else {
+            list($hours, $minutes, $seconds) = explode(':', $validatedData['lenght']);
         }
-    
-        return response()->json($film, 201);
+        
+        
+        $validatedData['lenght'] = strval($hours * 3600 + $minutes * 60 + $seconds);
+
+        $film = Film::create($validatedData);
+
+        return response()->json(['id' => $film->id], 201);
     }
-    
 }

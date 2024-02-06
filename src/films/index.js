@@ -26,11 +26,28 @@ function Films() {
                 console.error('There was an error!', error);
             });
     }, []);
+    console.log(films);
 
     let filteredFilms = films.filter(film => {
-        const filmDate = new Date(film.airing).toISOString().split('T')[0]; // Use ISO string and split to get the date part
-        return filmDate.includes(searchDate) && (searchGenre === "" || film.category === searchGenre);
+        // If film.airing is an array, iterate over it
+        if (Array.isArray(film.airing)) {
+            return film.airing.some(dateStr => {
+                // Remove square brackets and double quotes from dateStr
+                dateStr = dateStr.replace(/[\[\]"]/g, '');
+                dateStr = dateStr.replace(/"/g, '');
+                if (isNaN(Date.parse(dateStr))) {
+                    console.error('Invalid date:', dateStr);
+                    return false;
+                }
+                let filmDate = new Date(dateStr).toISOString().split('T')[0]; // Convert to ISO string and split to get the date part
+                return filmDate.includes(searchDate);
+            }) && (searchGenre === "" || film.category === searchGenre);
+        } else {
+            console.error('Invalid date:', film.airing);
+            return false;
+        }
     });
+    
 
     if (sortBy === "name") {
         filteredFilms.sort((a, b) => a.film_name.localeCompare(b.film_name));

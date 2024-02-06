@@ -17,7 +17,12 @@ class FilmFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'film_name' => $this->faker->word,
+            'category' => $this->faker->word,
+            'airing' => json_encode([$this->faker->date]),
+            'lenght' => $this->faker->randomNumber(),
+            'availabe_seats_id' => $this->faker->randomNumber(),
         ];
     }
+    
 }

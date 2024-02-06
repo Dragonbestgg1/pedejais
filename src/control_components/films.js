@@ -9,8 +9,8 @@ function Control_film() {
     const [film, setFilm] = useState({
         film_name: '',
         category: '',
-        airing: [new Date()], // 'airing' is already an array
-        length: '',
+        airing: [new Date()],
+        lenght: '00:00:00', // Changed 'length' to 'lenght'
         availabe_seats_id: ''
     });
 
@@ -33,7 +33,7 @@ function Control_film() {
     useEffect(() => {
         axios.get('/stage')
             .then(response => {
-                setStages(response.data.map(stage => ({ value: stage.id, label: stage.stage })));
+                setStages(response.data.map(stage => ({ value: Number(stage.id), label: stage.stage })));
             })
             .catch(error => {
                 console.error(error);
@@ -56,12 +56,13 @@ function Control_film() {
 
     const handleDateChange = (date, index) => {
         let newAiring = [...film.airing];
-        newAiring[index] = date;
+        newAiring[index] = date.toISOString().split('T')[0]; // This will give you a date string in the format 'YYYY-MM-DD'
         setFilm({
             ...film,
             airing: newAiring
         });
     };
+       
 
     const addDate = () => {
         setFilm({
@@ -72,16 +73,45 @@ function Control_film() {
 
     const handleSubmit = e => {
         e.preventDefault();
-
-        axios.post('/films', film)
+    
+        // Convert the length from time string to seconds
+        let [hours, minutes, seconds] = film.lenght.split(':');
+        if (seconds === undefined) {
+            seconds = '00';
+        }
+        if (isNaN(hours) || isNaN(minutes) || isNaN(seconds)) {
+            console.error('Invalid time format. It should be HH:MM or HH:MM:SS');
+            return;
+        }
+        const lenghtInSeconds = Number(hours) * 3600 + Number(minutes) * 60 + Number(seconds);
+    
+        const filmData = {
+            ...film,
+            airing: film.airing.map(date => {
+                // Check if date is a Date object
+                if (!(date instanceof Date)) {
+                    // If not, create a new Date object from it
+                    date = new Date(date);
+                }
+                return date.toISOString().split('T')[0]; // Convert each date in the airing array to 'YYYY-MM-DD' format
+            }),
+            lenght: lenghtInSeconds // Send the length in seconds as a number
+        };
+    
+        // Log the filmData object
+        console.log(filmData);
+    
+        axios.post('/films', filmData)
             .then(response => {
                 console.log(response.data);
                 setModalIsOpen(false);
             })
             .catch(error => {
-                console.error(error);
+                console.error(error.response);
             });
     };
+    
+    
 
     return (
         <div>
@@ -94,7 +124,7 @@ function Control_film() {
                         <DatePicker key={index} selected={date} onChange={date => handleDateChange(date, index)} />
                     ))}
                     <button type="button" onClick={addDate}>Add another date</button>
-                    <input type="number" name="length" onChange={handleChange} placeholder="Length" />
+                    <input type="time" name="lenght" onChange={handleChange} placeholder="Length" /> 
                     <Select name="availabe_seats_id" options={stages} onChange={handleSelectChange} placeholder="Stage" />
                     <button type="submit">Submit</button>
                 </form>
