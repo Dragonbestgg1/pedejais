@@ -116,20 +116,20 @@ function Control_film() {
 
     return (
         <div>
-            <button onClick={() => setModalIsOpen(true)}>New Film</button>
-            <Modal isOpen={modalIsOpen} onRequestClose={() => setModalIsOpen(false)}>
-                <form onSubmit={handleSubmit}>
-                    <input type="text" name="film_name" onChange={handleChange} placeholder="Film Name" />
-                    <Select name="category" options={genres} onChange={handleSelectChange} placeholder="Category" />
+            <button className={`${style.but}`} onClick={() => setModalIsOpen(true)}>New Film</button>
+            <Modal className={`${style.modalF}`} isOpen={modalIsOpen} onRequestClose={() => setModalIsOpen(false)}>
+                <form className={`${style.modal}`} onSubmit={handleSubmit}>
+                    <input className={`${style.inputF}`} type="text" name="film_name" onChange={handleChange} placeholder="Film Name" />
+                    <Select className={`${style.select}`} name="category" options={genres} onChange={handleSelectChange} placeholder="Category" />
                     {film.airing.map((date, index) => (
-                        <DatePicker key={index} selected={date} onChange={date => handleDateChange(date, index)} />
+                        <DatePicker className={`${style.inputD}`} key={index} selected={date} onChange={date => handleDateChange(date, index)} />
                     ))}
-                    <button type="button" onClick={addDate}>Add another date</button>
-                    <input type="time" name="lenght" onChange={handleChange} placeholder="Length" /> 
-                    <input type="number" step="0.01" name="price" onChange={handleChange} placeholder="Price" />
-                    <input type="text" name="imageURL" onChange={handleChange} placeholder="Image URL" />
-                    <Select name="availabe_seats_id" options={stages} onChange={handleSelectChange} placeholder="Stage" />
-                    <button type="submit">Submit</button>
+                    <button className={`${style.ButF}`} type="button" onClick={addDate}>Add another date</button>
+                    <input className={`${style.inputF}`} type="time" name="lenght" onChange={handleChange} placeholder="Length" /> 
+                    <input className={`${style.inputF}`} type="number" step="0.01" name="price" onChange={handleChange} placeholder="Price" />
+                    <input className={`${style.inputF}`} type="text" name="imageURL" onChange={handleChange} placeholder="Image URL" />
+                    <Select className={`${style.select}`} name="availabe_seats_id" options={stages} onChange={handleSelectChange} placeholder="Stage" />
+                    <button className={`${style.ButF}`} type="submit">Submit</button>
                 </form>
             </Modal>
         </div>

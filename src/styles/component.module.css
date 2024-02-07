@@ -1,4 +1,5 @@
-.modal{
+.modal,
+.modalF{
     width: 50vw;
     height: 60vh;
     flex-direction: column;
@@ -15,6 +16,9 @@
     gap: 20px;
     padding: 20px;
 }
+.modalF{
+    height: 80vh;
+}
 .form{
     display: flex;
     align-items: center;
@@ -23,20 +27,51 @@
     gap: 20px;
     padding: 20px;
 }
-.input{
+.input,
+.inputF,
+.inputD{
     padding: 10px;
     border-radius: 10px;
     border: 1px solid black;
 }
-.But{
+.inputF{
+    width: 20%;
+}
+.inputD{
+    width: 78%;
+    margin-left: 10px;
+}
+.But,
+.ButF{
     background-color: #FFCF07;
     width: 100%;
     height: 5vh;
     border: none;
     transition: background-color 0.3s ease;
     border-radius: 5px;
-}
-.But:hover{
     cursor: pointer;
+}
+.But:hover,
+.ButF:hover{
     background-color: #FFA80F;
+}
+.but{
+    margin-top: 20px;
+    padding: 10px;
+    background: none;
+    border-radius: 10px;
+    border: 1px solid black;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease;
+}
+.but:hover{
+    background-color: #FFA80F;
+    color: white;
+    border: none;
+}
+.select{
+    width: 23%;
+}
+.ButF{
+    width: 23%;
 }
